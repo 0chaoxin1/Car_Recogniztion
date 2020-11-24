@@ -11,32 +11,28 @@ run train.py
 **test file: **
 
 1. get_model.py  
-'''
-from ResNet152BDICcl import cnn_model01
 
-def get_model():
-    model_weights_path = 'models/129-0.99853.hdf5'
-    img_width, img_height = 224, 224
-    num_channels = 3
-    num_classes = 196
-    model = cnn_model01(img_height, img_width, num_channels, num_classes)
-    model.load_weights(model_weights_path, by_name=True)
-    return model
-'''
+from ResNet152BDICcl import cnn_model01  
+def get_model():  
+    model_weights_path = 'models/129-0.99853.hdf5'  
+    img_width, img_height = 224, 224  
+    num_channels = 3  
+    num_classes = 196  
+    model = cnn_model01(img_height, img_width, num_channels, num_classes)  
+    model.load_weights(model_weights_path, by_name=True)  
+    return model  
+
 2. test.py
-'''
+
 from get_model import get_model
 
 if __name__ == '__main__':
     model = get_model()
-
     pb = ProgressBar(total=100, prefix='Predicting test data', suffix='', decimals=3, length=50, fill='=')
     num_samples = 8041
     true_samples = 0
-
     cars_meta = scipy.io.loadmat('get/cars_test_annos_withlabels')
     annotations = cars_meta['annotations']
-
     start = time.time()
     out = open('./test_output/result.txt', 'a')
     y_test = []
@@ -51,7 +47,6 @@ if __name__ == '__main__':
         prob = np.max(preds)
         class_id = np.argmax(preds)
         true_class = annotations[0][i][4]
-
         out.write('{}\n'.format(str(class_id + 1)))
         # # 进度条
         # pb.print_progress_bar((i + 1) * 100 / num_samples)
@@ -59,12 +54,9 @@ if __name__ == '__main__':
         y_pred.append((int(np.argmax(preds))+1))
         # 真实标签
         y_test.append(int(annotations[0][i][4]))
-
         out.write('{}\n'.format(str(class_id + 1)))
         # 进度条
         pb.print_progress_bar((i + 1) * 100 / num_samples)
-
-
     print(accuracy_score(y_test, y_pred))
     end = time.time()
     seconds = end - start
@@ -76,8 +68,6 @@ if __name__ == '__main__':
     print(recall_score(y_test, y_pred, average=None))
     print(f1_score(y_test, y_pred, average='macro'))
     print(f1_score(y_test, y_pred, average=None))
-   
     out.close()
     K.clear_session()
-'''
 
