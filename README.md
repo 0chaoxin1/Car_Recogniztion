@@ -14,13 +14,13 @@ test file:
 
 from ResNet152BDICcl import cnn_model01  
 def get_model():  
-    model_weights_path = 'models/129-0.99853.hdf5'  
-    img_width, img_height = 224, 224  
-    num_channels = 3  
-    num_classes = 196  
-    model = cnn_model01(img_height, img_width, num_channels, num_classes)  
-    model.load_weights(model_weights_path, by_name=True)  
-    return model  
+&nbsp;&nbsp;&nbsp;&nbsp;model_weights_path = 'models/129-0.99853.hdf5'  
+&nbsp;&nbsp;&nbsp;&nbsp;img_width, img_height = 224, 224  
+&nbsp;&nbsp;&nbsp;&nbsp;num_channels = 3  
+&nbsp;&nbsp;&nbsp;&nbsp;num_classes = 196  
+&nbsp;&nbsp;&nbsp;&nbsp;model = cnn_model01(img_height, img_width, num_channels, num_classes)  
+&nbsp;&nbsp;&nbsp;&nbsp;model.load_weights(model_weights_path, by_name=True)  
+&nbsp;&nbsp;&nbsp;&nbsp;return model  
 
 2. test.py  
 
