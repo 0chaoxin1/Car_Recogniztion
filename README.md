@@ -27,41 +27,40 @@ def get_model():
 from get_model import get_model  
 
 if __name__ == '__main__':  
-    model = get_model()
-    pb = ProgressBar(total=100, prefix='Predicting test data', suffix='', decimals=3, length=50, fill='=')  
-    num_samples = 8041  
-    true_samples = 0  
-    cars_meta = scipy.io.loadmat('get/cars_test_annos_withlabels')  
-    annotations = cars_meta['annotations']  
-    start = time.time()  
-    out = open('./test_output/result.txt', 'a')  
-    y_test = []  
-    y_pred = []  
-    for i in range(num_samples):  
-        filename = os.path.join('data/test', '%05d.jpg' % (i + 1))  
-        bgr_img = cv.imread(filename)  
-        rgb_img = cv.cvtColor(bgr_img, cv.COLOR_BGR2RGB)  
-        rgb_img = np.expand_dims(rgb_img, 0)  
-        rgb_img = rgb_img/255.  
-        preds = model.predict(rgb_img)  
-        prob = np.max(preds)  
-        class_id = np.argmax(preds)  
-        true_class = annotations[0][i][4]  
-        out.write('{}\n'.format(str(class_id + 1)))  
-        # # 进度条  
-        # pb.print_progress_bar((i + 1) * 100 / num_samples)  
-        # 预测标签  
-        y_pred.append((int(np.argmax(preds))+1))  
-        # 真实标签  
-        y_test.append(int(annotations[0][i][4]))  
-        out.write('{}\n'.format(str(class_id + 1)))  
-        # 进度条  
-        pb.print_progress_bar((i + 1) * 100 / num_samples)  
-    print(accuracy_score(y_test, y_pred))  
-    end = time.time()  
-    seconds = end - start  
-    use_times = seconds / 60.0  
-    print('test time: %.3f' % use_times, '分钟')  
-    out.close()  
-    K.clear_session()  
-
+&nbsp;&nbsp;&nbsp;&nbsp;model = get_model()
+&nbsp;&nbsp;&nbsp;&nbsp;pb = ProgressBar(total=100, prefix='Predicting test data', suffix='', decimals=3, length=50, fill='=')  
+&nbsp;&nbsp;&nbsp;&nbsp;num_samples = 8041  
+&nbsp;&nbsp;&nbsp;&nbsp;true_samples = 0  
+&nbsp;&nbsp;&nbsp;&nbsp;cars_meta = scipy.io.loadmat('get/cars_test_annos_withlabels')  
+&nbsp;&nbsp;&nbsp;&nbsp;annotations = cars_meta['annotations']  
+&nbsp;&nbsp;&nbsp;&nbsp;start = time.time()  
+&nbsp;&nbsp;&nbsp;&nbsp;out = open('./test_output/result.txt', 'a')  
+&nbsp;&nbsp;&nbsp;&nbsp;y_test = []  
+&nbsp;&nbsp;&nbsp;&nbsp;y_pred = []  
+&nbsp;&nbsp;&nbsp;&nbsp;for i in range(num_samples):  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filename = os.path.join('data/test', '%05d.jpg' % (i + 1))  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bgr_img = cv.imread(filename)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rgb_img = cv.cvtColor(bgr_img, cv.COLOR_BGR2RGB)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rgb_img = np.expand_dims(rgb_img, 0)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rgb_img = rgb_img/255.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;preds = model.predict(rgb_img)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prob = np.max(preds)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class_id = np.argmax(preds)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;true_class = annotations[0][i][4]  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;out.write('{}\n'.format(str(class_id + 1)))  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# # 进度条  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# pb.print_progress_bar((i + 1) * 100 / num_samples)  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# 预测标签  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y_pred.append((int(np.argmax(preds))+1))  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# 真实标签  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y_test.append(int(annotations[0][i][4]))  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;out.write('{}\n'.format(str(class_id + 1)))  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# 进度条  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pb.print_progress_bar((i + 1) * 100 / num_samples)  
+&nbsp;&nbsp;&nbsp;&nbsp;print(accuracy_score(y_test, y_pred))  
+&nbsp;&nbsp;&nbsp;&nbsp;end = time.time()  
+&nbsp;&nbsp;&nbsp;&nbsp;seconds = end - start  
+&nbsp;&nbsp;&nbsp;&nbsp;use_times = seconds / 60.0  
+&nbsp;&nbsp;&nbsp;&nbsp;print('test time: %.3f' % use_times, '分钟')  
+&nbsp;&nbsp;&nbsp;&nbsp;out.close()  
+&nbsp;&nbsp;&nbsp;&nbsp;K.clear_session()  
