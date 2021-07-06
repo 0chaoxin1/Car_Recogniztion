@@ -1,11 +1,10 @@
-
 from keras.optimizers import SGD
 from keras.layers import Input, Dense, Conv2D, MaxPooling2D, AveragePooling2D, ZeroPadding2D, Flatten, Dropout, Activation, add, GaussianNoise
 from keras.layers.normalization import BatchNormalization
 from keras.models import Model
 from keras import backend as K
 from sklearn.metrics import log_loss
-from custom_layers.scale_layer import Scale
+from scale_layer import Scale
 import sys
 import numpy as np
 from keras.datasets import cifar10
@@ -249,22 +248,16 @@ def cnn_model01(img_rows, img_cols, color_type=1, num_classes=None):
     # Dense(units:输出维度，activation=激活函数)全连接层（对上一层的神经元进行全部连接，实现特征的非线性组合）
     x_fc = Dense(1000, activation='softmax', name='fc1000')(x_fc)
 
-    # model = Model(img_input, x_fc)
-    # # net = get_model('ResNet50_v1d', pretrained='117a384e')
-    # # you may modify it to switch to another model. The name is case-insensitive
-    # # model_name = 'ResNet152_v1d'
-    # # # download and load the pre-trained model
-    # # net = gluoncv.model_zoo.get_model(model_name, pretrained='cddbc86f')
-    # # net_params = net.collect_params()
-    # if K.image_data_format() == 'channels_first':
-    #     # 使用预先训练过的权重进行Theano后端
-    #     # weights_path = 'ResNet152_v1d.h5'
-    #     weights_path = 'models/resnet152_weights_tf.h5'
-    # else:
-    #     # 在Tensorflow后端使用预先训练的权重
-    #     # weights_path = 'ResNet152_v1d.h5'
-    #     weights_path = 'models/resnet152_weights_tf.h5'
-    # model.load_weights(weights_path, by_name=True)
+    model = Model(img_input, x_fc)
+    if K.image_data_format() == 'channels_first':
+        # 使用预先训练过的权重进行Theano后端
+        # weights_path = 'ResNet152_v1d.h5'
+        weights_path = 'models/resnet152_weights_tf.h5'
+    else:
+        # 在Tensorflow后端使用预先训练的权重
+        # weights_path = 'ResNet152_v1d.h5'
+        weights_path = 'models/resnet152_weights_tf.h5'
+    model.load_weights(weights_path, by_name=True)
 
     # 截断并替换softmax层以进行传输学习
     # 不能使用model.layers.pop（），因为model不是Sequential（）类型
